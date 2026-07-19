@@ -1,0 +1,15 @@
+# Local development secrets.
+# Copy this file to .dev.vars and fill in the values. .dev.vars is gitignored.
+
+# Client ID and Client secret of your Shopify app, from the Shopify Partner
+# Dashboard under Apps -> your app -> Overview -> Client credentials.
+SHOPIFY_API_KEY=your_shopify_client_id
+SHOPIFY_API_SECRET=your_shopify_client_secret
+
+# Random 32-character key used to encrypt your SimplyPrint API key at rest.
+# Generate one with: openssl rand -hex 16
+ENCRYPTION_KEY=your_32_character_encryption_key
+
+# Public URL this app is reachable at. For local development with the Shopify
+# CLI this is your tunnel URL; in production it is your Worker URL.
+SHOPIFY_APP_URL=http://localhost:3000

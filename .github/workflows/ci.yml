@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # The build is the gate: it is what has to succeed for a deploy to work.
+      - run: npm run build
+
+      # Typecheck is informational for now. The project has pre-existing type
+      # errors (see CONTRIBUTING.md). Once those are fixed, drop the `|| true`
+      # so regressions fail the build.
+      - name: Typecheck (informational)
+        run: npm run typecheck || true

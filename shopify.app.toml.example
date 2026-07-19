@@ -1,0 +1,52 @@
+# Shopify app configuration.
+#
+# Copy this to shopify.app.toml and fill in your own values. The real
+# shopify.app.toml is gitignored because it contains your app's client_id.
+#
+# Learn more: https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Shopify2SimplyPrint"
+
+# The Client ID of your app, from the Shopify Partner Dashboard.
+client_id = "YOUR_SHOPIFY_CLIENT_ID"
+
+# The public URL of your deployed Worker.
+application_url = "https://shopify2simplyprint.YOUR-SUBDOMAIN.workers.dev"
+
+embedded = true
+
+[access_scopes]
+scopes = "read_products,read_orders,read_inventory,write_inventory"
+
+[auth]
+redirect_urls = [
+  "https://shopify2simplyprint.YOUR-SUBDOMAIN.workers.dev/auth/callback",
+  "https://shopify2simplyprint.YOUR-SUBDOMAIN.workers.dev/auth/shopify/callback",
+  "https://shopify2simplyprint.YOUR-SUBDOMAIN.workers.dev/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2025-10"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  topics = ["orders/paid"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  topics = ["inventory_levels/update"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "https://shopify2simplyprint.YOUR-SUBDOMAIN.workers.dev/webhooks"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "your-dev-store.myshopify.com"

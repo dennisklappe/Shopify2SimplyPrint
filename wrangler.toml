@@ -1,0 +1,31 @@
+name = "shopify2simplyprint"
+main = "server.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+assets = { directory = "build/client" }
+
+# D1 database.
+# When you deploy with the "Deploy to Cloudflare" button, Cloudflare creates this
+# database for you and fills in database_id automatically.
+# When deploying manually, run:
+#   npx wrangler d1 create shopify2simplyprint
+# and paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "shopify2simplyprint"
+database_id = ""
+
+[vars]
+# The public URL of this Worker. After your first deploy, set this to the URL
+# Cloudflare assigned you (for example https://shopify2simplyprint.<your-subdomain>.workers.dev)
+# or your own custom domain, then redeploy.
+SHOPIFY_APP_URL = ""
+
+# The Client ID of your Shopify app, from the Shopify Partner Dashboard.
+# This is not a secret. The client secret is stored separately, see README.
+SHOPIFY_API_KEY = ""
+
+# Secrets are NOT set here. Set them with:
+#   npx wrangler secret put SHOPIFY_API_SECRET
+#   npx wrangler secret put ENCRYPTION_KEY
+# See .dev.vars.example for local development.

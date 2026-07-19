@@ -1,0 +1,63 @@
+{
+  "name": "shopify2simplyprint",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted Shopify app that automatically adds 3D print jobs to your SimplyPrint queue when orders are paid",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "remix vite:build",
+    "dev": "remix vite:dev",
+    "start": "wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "typegen": "wrangler types",
+    "db:migrate": "wrangler d1 execute shopify2simplyprint --local --file=./migrations/0001_initial.sql",
+    "db:migrate:remote": "wrangler d1 execute shopify2simplyprint --remote --file=./migrations/0001_initial.sql"
+  },
+  "cloudflare": {
+    "bindings": {
+      "SHOPIFY_API_KEY": {
+        "description": "The **Client ID** of your Shopify app, from the Shopify Partner Dashboard under **Apps → your app → Overview → Client credentials**. Not a secret."
+      },
+      "SHOPIFY_API_SECRET": {
+        "description": "The **Client secret** of your Shopify app, from the same **Client credentials** panel as the Client ID above."
+      },
+      "ENCRYPTION_KEY": {
+        "description": "A random 32-character string used to encrypt your SimplyPrint API key before storing it. Generate one with `openssl rand -hex 16`."
+      },
+      "SHOPIFY_APP_URL": {
+        "description": "The public URL of this Worker. You do not know it yet on this screen, so enter `https://example.com` for now. After the deploy finishes, Cloudflare shows your real Worker URL: set this variable to it and redeploy. See [step 3 of the README](https://github.com/dennisklappe/Shopify2SimplyPrint#step-3-point-shopify-at-your-worker)."
+      }
+    }
+  },
+  "dependencies": {
+    "@remix-run/cloudflare": "^2.16.0",
+    "@remix-run/node": "^2.16.0",
+    "@remix-run/react": "^2.16.0",
+    "@remix-run/server-runtime": "^2.16.0",
+    "@shopify/app-bridge-react": "^4.2.8",
+    "@shopify/polaris": "^13.9.0",
+    "@shopify/polaris-icons": "^9.3.1",
+    "@shopify/shopify-api": "^11.0.0",
+    "@shopify/shopify-app-remix": "^4.1.0",
+    "isbot": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "@remix-run/dev": "^2.16.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0",
+    "vite-tsconfig-paths": "^5.1.0",
+    "wrangler": "^4.55.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false
+}

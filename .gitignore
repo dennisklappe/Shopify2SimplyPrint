@@ -1,0 +1,12 @@
+node_modules
+.cache
+build
+.env
+.dev.vars
+.wrangler
+.shopify
+*.log
+.DS_Store
+
+# Contains your own app's client_id. Copy from shopify.app.toml.example
+shopify.app.toml
